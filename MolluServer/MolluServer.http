@@ -1,0 +1,6 @@
+@MolluServer_HostAddress = http://localhost:5268
+
+GET {{MolluServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

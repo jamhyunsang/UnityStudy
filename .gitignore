@@ -75,3 +75,7 @@ crashlytics-build.properties
 /MolluProject/obj
 /MolluProject/.plastic
 /MolluProject/.vsconfig
+/MolluProject/Logs
+/MolluProject/Temp
+/MolluServer/bin
+/MolluServer/obj
