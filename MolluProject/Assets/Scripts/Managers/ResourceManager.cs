@@ -16,7 +16,7 @@ public class ResourceManager : Singleton<ResourceManager>
     {
         if (isAddressable)
         {
-            string resourcePath = $"Assets/ResourceAddressable/{path}";
+            string resourcePath = $"{path}";
             var handle = Addressables.LoadAssetAsync<T>(resourcePath);
             await handle.Task;
             return handle.Status == AsyncOperationStatus.Succeeded ? handle.Result : null;

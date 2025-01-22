@@ -15,8 +15,18 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 40c15302320f25a459afc69af1377eca
   m_SerializeEntries:
+  - m_GUID: 16bfee60bb4ce06448a34dead44ad99c
+    m_Address: Prefab/UI/Windows/GameWindow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 67216e61b3c983c43b8ba729fdb8a718
-    m_Address: Assets/ResourceAddressable/Prefab/UI/Windows/LobbyWindow
+    m_Address: Prefab/UI/Windows/LobbyWindow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b311026ab8a8fc049b96971d694d01e1
+    m_Address: Table/TestTable
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

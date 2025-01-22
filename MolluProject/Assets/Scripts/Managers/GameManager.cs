@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
     {
         _ = ResourceManager.Instance;
         _ = UIManager.Instance;
+        _ = DataManager.Instance;
     }
     #endregion
 
