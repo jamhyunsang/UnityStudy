@@ -1,0 +1,6 @@
+[submodule "MolluServer/UnityStudySub"]
+	path = MolluServer/Common
+	url = https://github.com/jamhyunsang/UnityStudySub.git
+[submodule "MolluProject/Assets/Scripts/UnityStudySub"]
+	path = MolluProject/Assets/Scripts/SharedScripts
+	url = https://github.com/jamhyunsang/UnityStudySub.git
