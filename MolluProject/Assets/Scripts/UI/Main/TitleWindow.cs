@@ -1,12 +1,16 @@
 using Cysharp.Threading.Tasks;
-using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 public class TitleWindow : UIElement
 {
+    #region Cashed Object
+    private Button Btn_Start = null;
+    #endregion
+
     #region Member Property
-    private Button startButton = null;
+    private int m_Step = 0;
     #endregion
 
     #region Override Method
@@ -22,14 +26,9 @@ public class TitleWindow : UIElement
     {
         var root = document.rootVisualElement;
 
-        // 시작 위치를 화면 오른쪽 바깥으로 설정
-        root.style.position = Position.Absolute;
-        root.style.left = new StyleLength(Screen.width);
+        await UIUtil.SlideUI(root, 10.0f, Direction.Right);
 
-        // 애니메이션: 오른쪽에서 왼쪽으로 등장
-        await SlideUIFromRightToLeft(root, duration: 10.0f);
-
-        startButton.SetEnabled(true);
+        StartStep();
     }
 
     public override async UniTask CloseAction()
@@ -46,37 +45,40 @@ public class TitleWindow : UIElement
     #region Member Method
     private void UICashing()
     {
-        startButton = document.rootVisualElement.Q<Button>("GameStartButton");
+        Btn_Start = document.rootVisualElement.Q<Button>("GameStartButton");
     }
 
     private void UISetting()
     {
-        startButton.clicked += GameStart;
+        Btn_Start.clicked += GameStart;
 
-        startButton.SetEnabled(false);
+        Btn_Start.SetEnabled(false);
     }
 
-    private async UniTask SlideUIFromRightToLeft(VisualElement uiElement, float duration)
+    private async void StartStep()
     {
-        float elapsedTime = 0f;
-        float startX = Screen.width;  // 시작 위치 (화면 오른쪽 바깥)
-        float endX = 0f;              // 목표 위치 (왼쪽 정렬)
-
-        // 프레임마다 위치 보간
-        while (elapsedTime < duration)
+        switch (m_Step)
         {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / duration);
-
-            // Lerp를 사용해 스타일 위치 보간
-            float currentX = Mathf.Lerp(startX, endX, t);
-            uiElement.transform.position = Vector3.right * currentX;
-
-            await UniTask.Yield(); // 다음 프레임까지 대기
+            case 0: await TableLoad(); break;
+            case 1: GameReady(); break;
         }
+    }
 
-        // 최종 위치 보정
-        uiElement.style.left = new StyleLength(endX);
+    private void NextStep()
+    {
+        m_Step++;
+        StartStep();
+    }
+
+    private async UniTask TableLoad()
+    {
+        await DataManager.Instance.Load();
+        NextStep();
+    }
+
+    private void GameReady()
+    {
+        Btn_Start.SetEnabled(true);
     }
     #endregion
 

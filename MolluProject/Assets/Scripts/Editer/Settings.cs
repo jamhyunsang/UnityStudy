@@ -11,7 +11,7 @@ public class Settings : EditorWindow
     private VisualTreeAsset m_VisualTreeAsset = default;
 
     [MenuItem("Custom/Settings")]
-    public static void Show()
+    public static void ShowWindow()
     {
         Settings wnd = GetWindow<Settings>();
         wnd.titleContent = new GUIContent("Settings");

@@ -1,5 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <engine:VisualElement name="area" style="height: 100%; width: 100%; background-color: rgb(0, 0, 0); padding-top: 40px; padding-right: 40px; padding-bottom: 40px; padding-left: 40px;">
         <engine:Label text="LobbyScene" focusable="true" style="height: 100%; width: 100%; font-size: 300px; color: rgb(255, 255, 255); -unity-text-align: middle-center;" />
+        <engine:Button text="Button" name="GameStart" style="position: absolute; top: 800px; left: 810px; height: 150px; width: 300px; bottom: auto; right: auto;" />
     </engine:VisualElement>
 </engine:UXML>

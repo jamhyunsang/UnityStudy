@@ -1,11 +1,11 @@
 using System.IO.Compression;
 using System.IO;
-using System.Text;
 using Newtonsoft.Json;
 using System.Security.Cryptography;
 
 public static class Util
 {
+    #region Json
     public static string ToJson(object Obj)
     {
         return JsonConvert.SerializeObject(Obj);
@@ -15,44 +15,44 @@ public static class Util
     {
         return JsonConvert.DeserializeObject<T>(Str);
     }
+    #endregion Json
 
-    public static string Decompress(string Str)
+    #region DeCompress And Decrypt
+    public static string DeCompress(byte[] bytes)
     {
-        var Data = ToObject<byte[]>(Str);
-        using (var InputStream = new MemoryStream(Data))
+        using (var inputStream = new MemoryStream(bytes))
         {
-            using (var BrotliStream = new BrotliStream(InputStream, CompressionMode.Decompress))
+            using (var brotliStream = new BrotliStream(inputStream, CompressionMode.Decompress))
             {
-                using (var OutputStream = new MemoryStream())
+                using (var streamReader = new StreamReader(brotliStream))
                 {
-                    BrotliStream.CopyTo(OutputStream);
-                    return Encoding.UTF8.GetString(OutputStream.ToArray());
+                    return streamReader.ReadToEnd();
                 }
             }
         }
     }
 
-    public static string Decrypt(string encryptedData)
+    public static byte[] Decrypt(byte[] bytes)
     {
-        var ByteData = ToObject<byte[]>(encryptedData);
-
-        using (var AES = Aes.Create())
+        using (var aes = Aes.Create())
         {
-            AES.Key = Def.EncryptKey;
-            AES.IV = Def.EncryptIV;
-            using (var Decryptor = AES.CreateDecryptor())
+            aes.Key = Def.EncryptKey;
+            aes.IV = Def.EncryptIV;
+            using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
             {
-                using (var InputStream = new MemoryStream(ByteData))
+                using (var memoryStream = new MemoryStream(bytes))
                 {
-                    using (var CryptoStream = new CryptoStream(InputStream, Decryptor, CryptoStreamMode.Read))
+                    using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
                     {
-                        using (var reader = new StreamReader(CryptoStream))
+                        using (var outputStream = new MemoryStream())
                         {
-                            return reader.ReadToEnd();
+                            cryptoStream.CopyTo(outputStream);
+                            return outputStream.ToArray();
                         }
                     }
                 }
             }
         }
     }
+    #endregion
 }
